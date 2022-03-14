@@ -1,0 +1,114 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: configs.qtcc.quanxiang.dev
+spec:
+  group: qtcc.quanxiang.dev
+  names:
+    kind: Config
+    listKind: ConfigList
+    plural: configs
+    singular: config
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Config is the Schema for the configs API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ConfigSpec defines the desired state of Config
+            properties:
+              image:
+                description: Docker image name.
+                type: string
+              kind:
+                type: string
+              params:
+                description: pod params include env and args.
+                items:
+                  properties:
+                    name:
+                      type: string
+                    scope:
+                      type: string
+                    value:
+                      type: string
+                  type: object
+                type: array
+              ports:
+                description: List of ports to expose from the container
+                items:
+                  description: ContainerPort represents a network port in a single
+                    container.
+                  properties:
+                    containerPort:
+                      description: Number of port to expose on the pod's IP address.
+                        This must be a valid port number, 0 < x < 65536.
+                      format: int32
+                      type: integer
+                    hostIP:
+                      description: What host IP to bind the external port to.
+                      type: string
+                    hostPort:
+                      description: Number of port to expose on the host. If specified,
+                        this must be a valid port number, 0 < x < 65536. If HostNetwork
+                        is specified, this must match ContainerPort. Most containers
+                        do not need this.
+                      format: int32
+                      type: integer
+                    name:
+                      description: If specified, this must be an IANA_SVC_NAME and
+                        unique within the pod. Each named port in a pod must have
+                        a unique name. Name for the port that can be referred to by
+                        services.
+                      type: string
+                    protocol:
+                      default: TCP
+                      description: Protocol for port. Must be UDP, TCP, or SCTP. Defaults
+                        to "TCP".
+                      type: string
+                  required:
+                  - containerPort
+                  type: object
+                type: array
+              rollingWay:
+                description: RollingWay configure the update synchronization notification
+                  interface
+                properties:
+                  method:
+                    type: string
+                  uri:
+                    type: string
+                type: object
+            type: object
+          status:
+            description: ConfigStatus defines the observed state of Config
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

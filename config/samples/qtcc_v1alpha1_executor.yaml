@@ -1,0 +1,9 @@
+apiVersion: qtcc.quanxiang.dev/v1alpha1
+kind: Executor
+metadata:
+  name: crd-default
+  namespace: lowcode
+spec:
+  configs:
+    - kind: sample2
+      configname: sample2

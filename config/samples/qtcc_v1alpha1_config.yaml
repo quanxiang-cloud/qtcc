@@ -1,0 +1,35 @@
+apiVersion: qtcc.quanxiang.dev/v1alpha1
+kind: Config
+metadata:
+  name: sample1
+  namespace: lowcode
+  labels:
+    qtcc.quanxiang.dev: default
+spec:
+    kind: sample1
+    image: wentevill/demo:alpha1
+    ports:
+        - name: http-web
+          containerPort: 80
+          protocol: TCP
+    rollingWay:
+      method: GET
+      uri: /api/v1/health
+---
+apiVersion: qtcc.quanxiang.dev/v1alpha1
+kind: Config
+metadata:
+  name: sample2
+  namespace: lowcode
+  labels:
+    qtcc.quanxiang.dev: default
+spec:
+    kind: sample2
+    image: wentevill/demo:alpha1
+    ports:
+        - name: http-web
+          containerPort: 80
+          protocol: TCP
+    rollingWay:
+      method: GET
+      uri: /api/v1/health

@@ -1,0 +1,59 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - qtcc.quanxiang.dev
+  resources:
+  - configs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - qtcc.quanxiang.dev
+  resources:
+  - configs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - qtcc.quanxiang.dev
+  resources:
+  - configs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - qtcc.quanxiang.dev
+  resources:
+  - executors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - qtcc.quanxiang.dev
+  resources:
+  - executors/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - qtcc.quanxiang.dev
+  resources:
+  - executors/status
+  verbs:
+  - get
+  - patch
+  - update

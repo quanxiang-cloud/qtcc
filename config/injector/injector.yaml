@@ -1,0 +1,35 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  generation: 1
+  labels:
+    app: qtcc-injector
+  name: qtcc-injector
+webhooks:
+- admissionReviewVersions:
+  - v1beta1
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURJakNDQWdxZ0F3SUJBZ0lSQUlmdDMzM1ZtTGZ4WHJGSnkyS2J5OU13RFFZSktvWklodmNOQVFFTEJRQXcKR3pFWk1CY0dBMVVFQXhNUWNYUmpZeTFwYm1wbFkzUnZjaTFqWVRBZUZ3MHlNakF6TURRd016RTJORFJhRncwegpNakF6TURFd016RTJORFJhTUJzeEdUQVhCZ05WQkFNVEVIRjBZMk10YVc1cVpXTjBiM0l0WTJFd2dnRWlNQTBHCkNTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFDK25DM1JZYXpna0tzcXF4amIyNGpIcHkwak5zb3cKczIrdG9uZWtsc1pwSEFOYzJRblNoKzRHSzQ2VkRSUTRBbGZPekZuOUpDREgvTkJNNElnc3dicUtncDVyY3RvYQpPNzJqbjFlR2JMcEEzanpCS3dtd3NUeTVOeVozOFFvSGJEWnEydGhpN3NCRFpRWjhNTnlFSjZiR0tUTG1tU2owCmNFVGZIVlZpRlJjK1M4WVpNY3dmWi9MVW5lS2NDaVRyK0l5ME1nWFZxM0pCa2RrSG9SMFg0bmxhYytXWTVUWGQKR3dQUFN0b3hCZk0rZjR3RUUxejRpTVE5dTM1amhnaUZlK1NHZDlOWjgxRjFPWlBDSDNIUHRQaHNGckJuMGlQawpBY1l6NHdFc0JlT1B0VDFrYnNRVUwxLzNsUVNzREN0V2lBVUQ2MUI2Qnh5bzhGZFZpbm5UTUdDakFnTUJBQUdqCllUQmZNQTRHQTFVZER3RUIvd1FFQXdJQ3BEQWRCZ05WSFNVRUZqQVVCZ2dyQmdFRkJRY0RBUVlJS3dZQkJRVUgKQXdJd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUZCdmtMdHlQSmgxb1FzZjIxd0FvcUFEWgpLcUF3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQURvTkFvVUI5d3pNaDZiNE5SZ1BzRWFjK2kvSWU1OTNaRzIwCkV1NXRBTFlRUHc1c25BTFoxOGN2NHJLT2pKbTZCeUp6QTZPUjlTNkJGZldwbzF5bk04OEVTVjhGdDBiUERDZisKZ0xnVENsWnFsMTl3WWVHenp3Z1pKTi93UTVwQ3JwMHo4VWcyM2RvNkxuVTlPN3pDOU41ay9zUThkZkhlTzNLQQo3R3RYZEJIN0tDRysydHF1SytwRmdSNzFvK2hZazFxTmxjZFNXSEd0UW9pclhHeDFvU3hjbUVaeE1ybmpBOVVUClZ6S2hmNCtET1IxN0hEM1hDUlBXUmJ3YXJlcXpZRzZMSFJDNUVmME02ek1FQkJoeEIwOCsyaFRmb1RWY3RhbHcKbmFvellleFlRenpjWVpQS2RuRnVjM0lXYjhUb1pFUGtObGNDYjFwclZ3Wm9TaUNDRWlnPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    service:
+      name: qtcc-injector
+      namespace: qtcc-system
+      path: /mutate
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: injector.quanxiang.dev
+  namespaceSelector: {}
+  objectSelector: {}
+  reinvocationPolicy: Never
+  rules:
+  - apiGroups:
+    - "qtcc.quanxiang.dev"
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    resources:
+    - executors
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10
