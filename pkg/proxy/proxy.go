@@ -124,7 +124,7 @@ func (p *proxy) whereami(w http.ResponseWriter, r *http.Request) {
 	}{}
 
 	if config != nil {
-		resp.Host = fmt.Sprintf("http://%s-%s.%s.svc.cluster.local", value, r.Host, p.namespace)
+		resp.Host = fmt.Sprintf("http://%s.%s.svc.cluster.local", value, p.namespace)
 		resp.RollingWay = config.Spec.RollingWay
 	}
 
