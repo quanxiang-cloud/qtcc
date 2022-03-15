@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/quanxiang-cloud/qtcc/pkg/client/clientset/versioned"
 	"github.com/quanxiang-cloud/qtcc/pkg/proxy"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
@@ -19,8 +20,10 @@ var (
 func main() {
 	var maxIdle int
 	var maxIdlePerHost int
+	var namespace string
 	flag.IntVar(&maxIdle, "maxIdle", 100, "max idle.")
 	flag.IntVar(&maxIdlePerHost, "maxIdlePerHost", 100, "max idle per host.")
+	flag.StringVar(&namespace, "namespace", "lowcode", "proxy namespace")
 	opts := zap.Options{
 		Development: true,
 	}
@@ -38,15 +41,20 @@ func main() {
 		cancel()
 	}()
 
-	transport := proxy.NewTransport(maxIdle, maxIdlePerHost)
+	kubeConfig := ctrl.GetConfigOrDie()
 
-	proxy, err := proxy.NewProxy(transport)
+	transport := proxy.NewTransport(maxIdle, maxIdlePerHost)
+	proxy, err := proxy.NewProxy(
+		transport,
+		versioned.NewForConfigOrDie(kubeConfig),
+		proxy.WithNamespace(namespace),
+	)
 	if err != nil {
 		log.Error(err, "new proxy")
 		return
 	}
 
+	log.Info("starting proxy")
 	proxy.Run(ctx)
 
-	log.Info("starting proxy")
 }
