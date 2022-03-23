@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	log = ctrl.Log.WithName("Injector")
+	log = ctrl.Log.WithName("Proxy")
 )
 
 func main() {

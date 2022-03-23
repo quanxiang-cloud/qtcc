@@ -163,6 +163,7 @@ func do(p *proxy) handler {
 		}
 		proxy := httputil.NewSingleHostReverseProxy(url)
 		proxy.Transport = p.transport
+		r.Host = url.Host
 		proxy.ServeHTTP(w, r)
 	}
 }
